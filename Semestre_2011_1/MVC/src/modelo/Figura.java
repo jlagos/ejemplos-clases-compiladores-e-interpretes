@@ -6,6 +6,8 @@ import java.awt.Point;
 public abstract class Figura {
 	protected Point posicion;
 	protected boolean seleccionada;
+	public int xs;
+	public int ys;
 	public abstract boolean dentroFigura(Point p);
 	public abstract void dibujar(Graphics g);	
 	

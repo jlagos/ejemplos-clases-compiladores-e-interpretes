@@ -16,6 +16,8 @@ public class Controlador {
 	private Modelo modelo;
 	private Vista vista;
 	private Figura seleccionada;
+	public int xclick;
+	public int yclick;
 	
 	public Controlador(Modelo modelo, Vista vista){
 		this.modelo=modelo;
@@ -54,11 +56,16 @@ public class Controlador {
 	public void eVmousePressed(MouseEvent ev) {
 		if(SwingUtilities.isLeftMouseButton(ev)){ 			//Click boton izquierdo selecciona figura
 			seleccionada=this.getFiguraEn(ev.getPoint());
-		}else if(SwingUtilities.isRightMouseButton(ev)){		//click boton izquierdo añade figura tipo cuadrado
+		}/*else if(SwingUtilities.isRightMouseButton(ev)){		//click boton izquierdo añade figura tipo cuadrado
 			this.anyadirFigura(new Cuadrado(ev.getPoint(),40));			
 		}else if(SwingUtilities.isMiddleMouseButton(ev))//click boton medio añade figura tipo circulo
 		{
 			this.anyadirFigura(new Circulo(ev.getPoint(),40));
+		}*/
+		vista.controlador.xclick=ev.getX();
+		vista.controlador.yclick=ev.getY();
+		if(SwingUtilities.isRightMouseButton(ev)){
+			vista.contextual.show(ev.getComponent(),ev.getX(), ev.getY());
 		}
 		vista.repaint();		
 	}
@@ -66,7 +73,9 @@ public class Controlador {
 	public void eVmouseDragged(MouseEvent ev) {
 		if(seleccionada!=null){
 			//El movimiento puede ser mas fluido recalculando el pto
-			this.cambiarPosicion(seleccionada, ev.getPoint());
+			
+			Point p=new Point(ev.getX()-seleccionada.xs, ev.getY()-seleccionada.ys);
+			this.cambiarPosicion(seleccionada, p);
 			vista.repaint();
 		}
 	}
@@ -77,6 +86,10 @@ public class Controlador {
 			seleccionada.setSeleccionada(false);
 			seleccionada=null;
 		}
+	}
+	
+	public void eVmouseMoved (MouseEvent ev) {
+		System.out.println("Aqui estoy "+ ev.getPoint());
 	}
 
 }
