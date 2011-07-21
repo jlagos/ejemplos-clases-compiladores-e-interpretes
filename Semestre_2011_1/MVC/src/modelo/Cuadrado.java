@@ -26,11 +26,10 @@ public class Cuadrado extends Figura {
 	@Override
 	//Muy rudimentario y solo a modo demostrativo, para uso serio debe ser mejorada
 	public boolean dentroFigura(Point p) {
-		Rectangle a=new Rectangle(p,new Dimension(getAncho(), getAncho()));
 		Rectangle b=new Rectangle(posicion,new Dimension(getAncho(), getAncho()));
 		xs=p.x-posicion.x;
 		ys=p.y-posicion.y;
-		return a.intersects(b);   
+		return b.contains(p);   
 	}
 	
 	@Override
